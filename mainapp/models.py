@@ -47,7 +47,7 @@ class User(AbstractUser, PermissionsMixin):
 class PostNews(models.Model):
     title_news = models.CharField(max_length=128)
     owner_news = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='my_posts')
-    text_news = models.TextField()
+    link = models.URLField()
     date_created = models.DateTimeField(auto_now_add=True)
     count_votes = models.IntegerField(null=True, blank=True)
 

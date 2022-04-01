@@ -22,6 +22,7 @@ class UserCommentPostSerializer(serializers.ModelSerializer):
 
 
 class UserVotePostSerializer(serializers.ModelSerializer):
+    owner_vote = serializers.CharField(source='owner_vote.username', default='', read_only=True)
 
     class Meta:
         model = UserVotePost
@@ -30,7 +31,12 @@ class UserVotePostSerializer(serializers.ModelSerializer):
 
 class PostNewsSerializer(serializers.ModelSerializer):
     owner_news = serializers.CharField(source='owner_news.username', default='', read_only=True)
+    count_votes = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = PostNews
-        fields = ('title_news', 'owner_news', 'text_news', 'date_created', 'count_votes')
+        fields = ('title_news', 'owner_news', 'link', 'date_created', 'count_votes')
+
+    def get_count_votes(self, instance):
+
+        return UserVotePost.objects.filter(post_news=instance, like=True).count()

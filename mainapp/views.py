@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework import status
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from django.utils import timezone
 
 from .models import PostNews, UserCommentPost, UserVotePost
 from .serializers import RegisterSerializer, UserCommentPostSerializer, UserVotePostSerializer, PostNewsSerializer
@@ -49,3 +51,10 @@ class UserVotePostViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.validated_data['owner_vote'] = self.request.user
         serializer.save()
+
+
+class PostAPIView(ListAPIView):
+    queryset = PostNews.objects.all()
+    permission_classes = (IsAdminUser, )
+    serializer_class = PostNewsSerializer
+
