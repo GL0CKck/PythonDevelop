@@ -12,6 +12,6 @@ urlpatterns = [
     path('registration/', RegisterUserApi.as_view(), name='register_user'),
     path('posts/', PostAPIView.as_view(), name='posts'),
     path('api/', include(router.urls)),
-    path('update/<int:pk>/', update_count_vote, name='update'),
+    path('update/', update_count_vote, name='update'),
 
 ]

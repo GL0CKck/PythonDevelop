@@ -62,18 +62,16 @@ class PostAPIView(ListAPIView):
     serializer_class = PostNewsSerializer
 
 
-def update_count_vote(request, pk):
+def update_count_vote(request):
     today = datetime.datetime.now().replace(tzinfo=pytz.utc)
     one_day = datetime.timedelta(days=1)
-
-    try:
-        posts = PostNews.objects.get(pk=pk)
-        votes = UserVotePost.objects.filter(post_news=posts)
-    except:
-        raise Http404('EROR')
-    odds = today-posts.date_created > one_day
-    if odds:
-        votes.delete()
-        posts.count_votes = 0
-        posts.save(update_fields=['count_votes'])
+    post = PostNews.objects.all()
+    index = len(post)
+    for i in range(0, index):
+        odds = today-post[i].date_created > one_day
+        votes = UserVotePost.objects.filter(post_news=post[i].pk)
+        if odds:
+            votes.delete()
+            post[i].count_votes = 0
+            post[i].save(update_fields=['count_votes'])
     return redirect('/')
