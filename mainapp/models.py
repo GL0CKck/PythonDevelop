@@ -52,7 +52,7 @@ class PostNews(models.Model):
     count_votes = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.title_news
+        return f'{self.pk}'
 
 
 class UserCommentPost(models.Model):

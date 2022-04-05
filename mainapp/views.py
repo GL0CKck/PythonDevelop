@@ -1,11 +1,14 @@
-from django.shortcuts import render
+import datetime
+
+import pytz
+from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from django.utils import timezone
-
+from django.http import Http404
 from .models import PostNews, UserCommentPost, UserVotePost
 from .serializers import RegisterSerializer, UserCommentPostSerializer, UserVotePostSerializer, PostNewsSerializer
 from rest_framework.viewsets import ModelViewSet
@@ -58,3 +61,19 @@ class PostAPIView(ListAPIView):
     permission_classes = (IsAdminUser, )
     serializer_class = PostNewsSerializer
 
+
+def update_count_vote(request, pk):
+    today = datetime.datetime.now().replace(tzinfo=pytz.utc)
+    one_day = datetime.timedelta(days=1)
+
+    try:
+        posts = PostNews.objects.get(pk=pk)
+        votes = UserVotePost.objects.filter(post_news=posts)
+    except:
+        raise Http404('EROR')
+    odds = today-posts.date_created > one_day
+    if odds:
+        votes.delete()
+        posts.count_votes = 0
+        posts.save(update_fields=['count_votes'])
+    return redirect('/')
