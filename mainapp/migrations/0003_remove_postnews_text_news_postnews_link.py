@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0002_alter_user_managers_alter_user_email_and_more'),
+        ("mainapp", "0002_alter_user_managers_alter_user_email_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='postnews',
-            name='text_news',
+            model_name="postnews",
+            name="text_news",
         ),
         migrations.AddField(
-            model_name='postnews',
-            name='link',
-            field=models.URLField(default='link'),
+            model_name="postnews",
+            name="link",
+            field=models.URLField(default="link"),
             preserve_default=False,
         ),
     ]

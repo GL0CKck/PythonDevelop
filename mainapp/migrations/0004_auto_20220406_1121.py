@@ -7,30 +7,30 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0003_remove_postnews_text_news_postnews_link'),
+        ("mainapp", "0003_remove_postnews_text_news_postnews_link"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='user',
+            name="user",
             options={},
         ),
         migrations.AlterModelManagers(
-            name='user',
+            name="user",
             managers=[
-                ('object', django.db.models.manager.Manager()),
+                ("object", django.db.models.manager.Manager()),
             ],
         ),
         migrations.RemoveField(
-            model_name='user',
-            name='date_joined',
+            model_name="user",
+            name="date_joined",
         ),
         migrations.RemoveField(
-            model_name='user',
-            name='first_name',
+            model_name="user",
+            name="first_name",
         ),
         migrations.RemoveField(
-            model_name='user',
-            name='last_name',
+            model_name="user",
+            name="last_name",
         ),
     ]

@@ -10,8 +10,12 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from .models import PostNews, UserCommentPost, UserVotePost
-from .serializers import (PostNewsSerializer, RegisterSerializer,
-                          UserCommentPostSerializer, UserVotePostSerializer)
+from .serializers import (
+    PostNewsSerializer,
+    RegisterSerializer,
+    UserCommentPostSerializer,
+    UserVotePostSerializer,
+)
 
 
 class RegisterUserApi(APIView):
@@ -28,11 +32,11 @@ class RegisterUserApi(APIView):
 
 class PostCreateViewSet(ModelViewSet):
     queryset = PostNews.objects.all()
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     serializer_class = PostNewsSerializer
 
     def perform_create(self, serializer):
-        serializer.validated_data['owner_news'] = self.request.user
+        serializer.validated_data["owner_news"] = self.request.user
         serializer.save()
 
 
@@ -42,23 +46,23 @@ class PostCreateCommentViewSet(ModelViewSet):
     serializer_class = UserCommentPostSerializer
 
     def perform_create(self, serializer):
-        serializer.validated_data['owner_comment'] = self.request.user
+        serializer.validated_data["owner_comment"] = self.request.user
         serializer.save()
 
 
 class UserVotePostViewSet(ModelViewSet):
     queryset = UserVotePost.objects.all()
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     serializer_class = UserVotePostSerializer
 
     def perform_create(self, serializer):
-        serializer.validated_data['owner_vote'] = self.request.user
+        serializer.validated_data["owner_vote"] = self.request.user
         serializer.save()
 
 
 class PostAPIView(ListAPIView):
     queryset = PostNews.objects.all()
-    permission_classes = (IsAdminUser, )
+    permission_classes = (IsAdminUser,)
     serializer_class = PostNewsSerializer
 
 
@@ -68,11 +72,11 @@ def update_count_vote(request):
     post = PostNews.objects.all()
     index = len(post)
     for i in range(0, index):
-        odds = today-post[i].date_created > one_day
+        odds = today - post[i].date_created > one_day
         votes = UserVotePost.objects.filter(post_news=post[i].pk)
         if odds:
             votes.delete()
             post[i].count_votes = 0
             post[i].date_created = today
-            post[i].save(update_fields=['count_votes', 'date_created'])
-    return redirect('/')
+            post[i].save(update_fields=["count_votes", "date_created"])
+    return redirect("/")
