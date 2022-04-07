@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-
-from .models import PostNews, UserVotePost, UserCommentPost, User
+from .models import PostNews, User, UserCommentPost, UserVotePost
 
 admin.site.register(User,)
 admin.site.register(PostNews,)

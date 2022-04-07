@@ -1,8 +1,9 @@
 from django.urls import include, path
-
-from .views import RegisterUserApi, PostCreateViewSet, PostCreateCommentViewSet, UserVotePostViewSet, PostAPIView, \
-    update_count_vote
 from rest_framework.routers import DefaultRouter
+
+from .views import (PostAPIView, PostCreateCommentViewSet, PostCreateViewSet,
+                    RegisterUserApi, UserVotePostViewSet, update_count_vote)
+
 app_name = 'mainapp'
 router = DefaultRouter()
 router.register('post_create', PostCreateViewSet)
@@ -13,5 +14,4 @@ urlpatterns = [
     path('posts/', PostAPIView.as_view(), name='posts'),
     path('api/', include(router.urls)),
     path('update/', update_count_vote, name='update'),
-
 ]

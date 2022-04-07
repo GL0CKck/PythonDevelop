@@ -1,8 +1,9 @@
+# import datetime
+#
+# import pytz
 from celery import shared_task
-import datetime
-import pytz
 
-from main.mainapp.models import PostNews, UserVotePost
+# from main.mainapp.models import PostNews, UserVotePost
 
 
 @shared_task()

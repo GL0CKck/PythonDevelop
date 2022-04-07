@@ -1,4 +1,4 @@
-from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
@@ -46,7 +46,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class PostNews(models.Model):
     title_news = models.CharField(max_length=128)
-    owner_news = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='my_posts')
+    owner_news = models.ForeignKey(User, on_delete=models.SET_NULL,
+                                   null=True, related_name='my_posts')
     link = models.URLField()
     date_created = models.DateTimeField(auto_now_add=True)
     count_votes = models.IntegerField(null=True, blank=True)
@@ -56,7 +57,8 @@ class PostNews(models.Model):
 
 
 class UserCommentPost(models.Model):
-    owner_comment = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='my_comments')
+    owner_comment = models.ForeignKey(User, on_delete=models.CASCADE,
+                                      null=True, related_name='my_comments')
     content = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     post_news = models.ForeignKey(PostNews, on_delete=models.CASCADE)
@@ -66,6 +68,3 @@ class UserVotePost(models.Model):
     post_news = models.ForeignKey(PostNews, on_delete=models.CASCADE)
     owner_vote = models.ForeignKey(User, on_delete=models.CASCADE)
     like = models.BooleanField(default=False)
-
-
-

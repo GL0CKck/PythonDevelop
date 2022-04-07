@@ -1,7 +1,6 @@
 import datetime
 
 
-from django.utils import timezone
 from pytz import utc
 
 
@@ -11,11 +10,8 @@ class LastRequestUser:
 
     def __call__(self, request):
         if request.user.is_authenticated:
-            request.user.last_login = datetime.datetime.utcnow().replace(tzinfo=utc)
+            today = datetime.datetime.utcnow().replace(tzinfo=utc)
+            request.user.last_login = today
             request.user.save()
         response = self.get_response(request)
         return response
-
-
-
-

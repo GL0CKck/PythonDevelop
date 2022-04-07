@@ -1,17 +1,17 @@
 import datetime
 
 import pytz
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from rest_framework import status
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
-from django.utils import timezone
-from django.http import Http404
-from .models import PostNews, UserCommentPost, UserVotePost
-from .serializers import RegisterSerializer, UserCommentPostSerializer, UserVotePostSerializer, PostNewsSerializer
 from rest_framework.viewsets import ModelViewSet
+
+from .models import PostNews, UserCommentPost, UserVotePost
+from .serializers import (PostNewsSerializer, RegisterSerializer,
+                          UserCommentPostSerializer, UserVotePostSerializer)
 
 
 class RegisterUserApi(APIView):
