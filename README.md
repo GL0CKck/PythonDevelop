@@ -19,3 +19,7 @@
  
  $ docker-compose build
  $ docker-compose up
+ 
+# PostMan # 
+
+$ https://www.postman.com/mishamoloko/workspace/my-workspace/collection/12177298-3a06a72c-174f-466c-8cce-4c8f7d4e29ad?action=share&creator=12177298
