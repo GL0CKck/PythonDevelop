@@ -73,5 +73,6 @@ def update_count_vote(request):
         if odds:
             votes.delete()
             post[i].count_votes = 0
-            post[i].save(update_fields=['count_votes'])
+            post[i].date_created = today
+            post[i].save(update_fields=['count_votes', 'date_created'])
     return redirect('/')

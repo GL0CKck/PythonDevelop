@@ -1,13 +1,20 @@
+import datetime
+
+
 from django.utils import timezone
+from pytz import utc
 
 
-class UpdatePostCountVote:
+class LastRequestUser:
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
-
-        return self.get_response(request)
+        if request.user.is_authenticated:
+            request.user.last_login = datetime.datetime.utcnow().replace(tzinfo=utc)
+            request.user.save()
+        response = self.get_response(request)
+        return response
 
 
 
